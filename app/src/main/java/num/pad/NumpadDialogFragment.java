@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,7 +47,7 @@ public class NumpadDialogFragment extends DialogFragment{
 //    }
 
     //määritellään kysymys (questionOnScreen), oikea vastaus (correctAnswer) ja käyttäjän syöttämä vastaus (userAswer)
-    String questionOnScreen = "Laske: " + String.valueOf(number1) + " + " + String.valueOf(number2);
+    String questionOnScreen = String.valueOf(number1) + " + " + String.valueOf(number2) + " = ";
     final Integer correctAnswer = number1 + number2;
     Integer userAnswer;
     String finalUserAnswer;
@@ -70,7 +71,7 @@ public class NumpadDialogFragment extends DialogFragment{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.DialogStyle));
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         numpadView = inflater.inflate(R.layout.numpad, null);
