@@ -13,37 +13,33 @@ import android.widget.Toast;
 
 //aluksi git harjoittelua
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NumpadDialogFragment.ChoiceListener{
 
-    EditText answerText;
-
-    GridView numpadGrid;
-
-    static final String[] numbers = new String[]{
-            "1", "2", "3",
-            "4", "5", "6",
-            "7", "8", "9",
-            "C", "0", "OK"};
-
+    TextView textViewFalseTrue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textViewFalseTrue = findViewById(R.id.textView2);
+    }
 
-        answerText = findViewById(R.id.answerView);
-        numpadGrid = findViewById(R.id.numbadGrid);
+    protected void startDialog_clicked(View v)
+    {
+        NumpadDialogFragment dialog = new NumpadDialogFragment();
+        dialog.show(getFragmentManager(), "AnswerDia");
+    }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, numbers);
+    public void onDialogNumberClickCorrect(android.app.DialogFragment dialog)
+    {
+        Toast.makeText(getBaseContext(), "Oikein!", Toast.LENGTH_SHORT).show();
+        textViewFalseTrue.setText("True");
+        dialog.dismiss();
+    }
 
-        numpadGrid.setAdapter(adapter);
-
-        numpadGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                Object selected_button = numpadGrid.getItemAtPosition(position);
-                answerText.setText(answerText.getText() + "1");
-            }
-        });
+    public void onDialogNumberClickWrong(android.app.DialogFragment dialog)
+    {
+        Toast.makeText(getBaseContext(), "Väärin!", Toast.LENGTH_SHORT).show();
+        textViewFalseTrue.setText("False");
+        dialog.dismiss();
     }
 }
